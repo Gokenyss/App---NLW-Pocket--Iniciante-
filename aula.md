@@ -44,6 +44,7 @@ Apresentar os dados
 
 - [x] Uma lista que contém qualquer tipo de dado
 - [x] Métodos de array: push, find, forEach
+
 ### Objetos: 
 
 - [x] Atributos e métodos
