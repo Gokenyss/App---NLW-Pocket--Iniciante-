@@ -10,7 +10,7 @@ console.log(metas[1] + ", " + metas[0]);
 
 let meta = {
     value: 'ler um livro por mês',
-    checked: false
+    checked: true,
 
 }
 
@@ -21,14 +21,18 @@ console.log(meta.value)
 
 const criarmeta=() => {} 
 
-let meta2 = {
+let meta2 = [
+    meta,
+    {
     value: 'ler dois livro por mês',
     checked: false,
     isChecked: (info) => {
         console.log(info)
     }
 }
+]
 
-meta2.isChecked(meta2.value)
+console.log(meta2[1].value)
 
-function criarMeta () {} 
+//function criarMeta () {} 
+
