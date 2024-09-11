@@ -6,4 +6,4 @@
 - [x] Metas
 - [x] Remover Metas
 - [x] Sistemas de Mensagens 
-- [x] Sistema de carregar/salvar mensagens
+- [x] Persistir Dados: Sistema de carregar/salvar mensagens
