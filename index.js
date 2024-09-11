@@ -1,21 +1,45 @@
 const { select, input, checkbox } = require('@inquirer/prompts')
+const fs = require("fs").promises
 
-let meta = {}
-let metas = [meta]
+const mensagemInicial = "Bem vindo ao App de metas! || by:Alessandro"
+let mensagemDoApp = "ㅤ" 
+let metas
+
+const carregarMetas = async () => {
+    try {
+        const dados = await fs.readFile("metas.json", "utf-8")
+        metas = JSON.parse(dados)
+    }
+    catch(erro) {
+    metas = []
+    }
+}
+
+const salvarMetas = async () => {
+    await fs.writeFile("metas.json", JSON.stringify(metas, null, 2))
+}
 
 async function cadastrarMeta() {
     const meta = await input({ message: "ǫᴜᴀʟ ᴀ ᴍᴇᴛᴀ?" })
 
     if (meta.length == 0) {
-        console.log("ᴀ ᴍᴇᴛᴀ ɴᴀᴏ ᴘᴏᴅᴇ sᴇʀ ᴠᴀᴢɪᴀ!")
+        mensagemDoApp = "ᴀ ᴍᴇᴛᴀ ɴᴀᴏ ᴘᴏᴅᴇ sᴇʀ ᴠᴀᴢɪᴀ!"
         return
     }
     metas.push(
         { value: meta, checked: false }
     )
+
+    mensagemDoApp = "ᴍᴇᴛᴀ ᴄᴀᴅᴀsᴛʀᴀᴅᴀ ᴄᴏᴍ sᴜᴄᴇssᴏ!"
+
 }
 
 const listarMetas = async () => {
+
+    if(metas.length == 0) {
+        mensagemDoApp = "ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs!"
+        return
+    }
     const respostas = await checkbox({
         message: "(ᴜsᴇ ᴀs sᴇᴛᴀs (⭡⭣) ᴘᴀʀᴀ ᴇsᴄᴏʟʜᴇʀ ᴀʟɢᴜᴍᴀ ᴀʟᴛᴇʀɴᴀᴛɪᴠᴀ, ᴏ ᴇsᴘᴀᴄᴏ ᴘᴀʀᴀ sᴇʟᴇᴄɪᴏɴᴀʀ ᴇ ᴏ ᴇɴᴛᴇʀ ᴘᴀʀᴀ ғɪɴᴀʟɪᴢᴀʀ ᴀ ᴏᴘᴇʀᴀᴄᴀᴏ) || sᴇʟᴇᴄɪᴏɴᴇ ᴀs ᴍᴇᴛᴀs ᴄᴏɴᴄʟᴜɪᴅᴀs: ",
         choices: [...metas],
@@ -28,7 +52,7 @@ const listarMetas = async () => {
     })
 
     if(respostas.length == 0){
-        console.log("ɴᴇɴʜᴜᴍᴀ ᴍᴇᴛᴀ ғᴏɪ sᴇʟᴇᴄɪᴏɴᴀᴅᴀ!")
+        mensagemDoApp = "ɴᴇɴʜᴜᴍᴀ ᴍᴇᴛᴀ ғᴏɪ sᴇʟᴇᴄɪᴏɴᴀᴅᴀ!"
         return
     }
 
@@ -41,43 +65,63 @@ const listarMetas = async () => {
 
     })
 
-        console.log(respostas.length + " ᴍᴇᴛᴀ(s) ғᴏʀᴀᴍ ᴍᴀʀᴄᴀᴅᴀ(s) ᴄᴏᴍᴏ ᴄᴏɴᴄʟᴜɪᴅᴀ(s)!")
+        mensagemDoApp = respostas.length + " ᴍᴇᴛᴀ(s) ғᴏʀᴀᴍ ᴍᴀʀᴄᴀᴅᴀ(s) ᴄᴏᴍᴏ ᴄᴏɴᴄʟᴜɪᴅᴀ(s)!"
 }
 
 const MetasRealizadas = async () => {
+
+    if(metas.length == 0) {
+        mensagemDoApp = "ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs!"
+        return
+    }
 
     const realizadas = metas.filter((meta) => {
         return meta.checked
     })
 
     if(realizadas.length == 0) {
-        console.log('ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs ʀᴇᴀʟɪᴢᴀᴅᴀs!')
+        mensagemDoApp = 'ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs ʀᴇᴀʟɪᴢᴀᴅᴀs!'
         return
     }
 
     await select({
-        message: realizadas.length +" ᴍᴇᴛᴀs ʀᴇᴀʟɪᴢᴀᴅᴀs!",
         choices: [...realizadas]
-    })
+    }) 
+
+        mensagemDoApp = realizadas.length +" ᴍᴇᴛᴀs ʀᴇᴀʟɪᴢᴀᴅᴀs!"
+
 }
 
 const MetasPendentes = async () => {
+
+    if(metas.length == 0) {
+        mensagemDoApp = "ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs!"
+        return
+    }
+
     const pendente = metas.filter((meta) => { 
         return meta.checked != true
     })
     
     if(pendente.length == 0) {
-        console.log("ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs ᴘᴇɴᴅᴇɴᴛᴇs!")
+        mensagemDoApp = "ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs ᴘᴇɴᴅᴇɴᴛᴇs!"
         return
     }
 
     await select({
-        message: pendente.length + " ᴍᴇᴛᴀs ᴘᴇɴᴅᴇɴᴛᴇs!",
         choices: [...pendente]
     })
+
+    mensagemDoApp = pendente.length + " ᴍᴇᴛᴀs ᴘᴇɴᴅᴇɴᴛᴇs!"
+
 }
 
 async function DeletarMetas () {
+
+    if(metas.length == 0) {
+        mensagemDoApp = "ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs!"
+        return
+    }
 
     ///Remover marcação no Checkbox
     metas.forEach((m) => {
@@ -95,7 +139,7 @@ async function DeletarMetas () {
 
     })
     if(itensDeletar.length == 0){
-        console.log(itensDeletar.length + " ᴍᴇᴛᴀs ғᴏʀᴀᴍ ʀᴇᴍᴏᴠɪᴅᴀs!")
+        mensagemDoApp = itensDeletar.length + " ᴍᴇᴛᴀ(s) ғᴏʀᴀᴍ ʀᴇᴍᴏᴠɪᴅᴀ(s)!"
     }
 
     itensDeletar.forEach((item) => {
@@ -105,13 +149,27 @@ async function DeletarMetas () {
 
     })
 
-    console.log(`${itensDeletar.length} ᴍᴇᴛᴀ(s) ғᴏʀᴀᴍ ʀᴇᴍᴏᴠɪᴅᴀ(s)!`)
+    mensagemDoApp = itensDeletar.length + 'ᴍᴇᴛᴀ(s) ғᴏʀᴀᴍ ʀᴇᴍᴏᴠɪᴅᴀ(s)!'
+}
+
+const mostrarMensagem = () => {
+    console.clear();
+
+    if(mensagemDoApp != "") { 
+        console.log(mensagemInicial)
+        console.log("")
+        console.log(mensagemDoApp)
+        console.log("")
+        mensagemDoApp = ""
+    }
 }
 
 const start = async () => {
-    
+    await carregarMetas()
+
     while(true){
-        
+        mostrarMensagem()
+        await salvarMetas()
         const opção = await select({
             message: "ᴍᴇɴᴜ >",
             choices: [

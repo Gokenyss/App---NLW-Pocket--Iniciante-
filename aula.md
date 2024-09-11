@@ -44,7 +44,7 @@ Apresentar os dados
 ### Arrays: 
 
 - [x] Uma lista que contém qualquer tipo de dado
-- [x] Métodos de array: push, [find, forEach, filter] = HOT (Higher Order Functions)
+- [x] Métodos de array: push, [find, forEach, filter, map] = HOT (Higher Order Functions)
 
 ### Objetos: 
 
@@ -71,6 +71,13 @@ Apresentar os dados
 
 - [x] Importação de módulos (require, CommonJS)
 - [x] Biblioteca 'inquirer' para criar prompts interativos
+- [x] FS (file system)
+
+## JSON 
+
+- [x] JavaScript Object Notation (.json)
+- [x] JSON.parse(): transforma de JSON para js
+- [x] JSON.stringfy(): transforma de js para JSON
 
 ## Programação assíncrona e Promíses:
 

@@ -4,5 +4,6 @@
     - [x] Metas Pendentes
 - [x] Marcar/Desmarcar   
 - [x] Metas
-Remover Metas
-Sistemas de Mensagens 
+- [x] Remover Metas
+- [x] Sistemas de Mensagens 
+- [x] Sistema de carregar/salvar mensagens
