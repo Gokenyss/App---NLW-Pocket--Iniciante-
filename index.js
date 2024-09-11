@@ -1,20 +1,18 @@
 const { select, input, checkbox } = require('@inquirer/prompts')
-let meta = {
-    value: 'Tomar 3L de água por dia',
-    checked: false,
-}
+
+let meta = {}
 let metas = [meta]
 
-const cadastrarMeta = async () => {
-    const meta = await input({ message: "Qual é a meta?"})
+async function cadastrarMeta() {
+    const meta = await input({ message: "Qual é a meta?" })
 
-        if(meta.length == 0) { 
+    if (meta.length == 0) {
         console.log("A meta não pode ser vazia!")
         return
     }
-metas.push(
-    { value: meta, checked: false }
-)
+    metas.push(
+        { value: meta, checked: false }
+    )
 }
 
 const listarMetas = async () => {
@@ -46,6 +44,24 @@ const listarMetas = async () => {
         console.log("Meta(s) foram marcada(s) como concluida(s)!")
 }
 
+async function MetasRealizadas () {
+
+    const realizadas = metas.filter((meta) => (
+        return meta.checked
+    ))
+
+    if(realizadas.length == 0) {
+        console.log('Não existe metas realizadas')
+        return
+    }
+
+    await select({
+        message: "Metas realizadas",
+        choices: [...realizadas]
+    })
+}
+
+
 const start = async () => {
     
     while(true){
@@ -62,10 +78,18 @@ const start = async () => {
                     value: "listar"
                 },
                 {
+                    name: "Metas realizadas",
+                    value: "realizadas"
+                },
+                {
+                    name: "Metas pendentes",
+                    value: "pendentes"
+                },
+                {
                     name: "Sair",
                     value: "sair"
                 }
-            ] 
+            ]
         })
 
         switch(opção) {
@@ -74,6 +98,12 @@ const start = async () => {
                 break
             case "listar":
                 await listarMetas()
+                break
+            case "realizdas":
+                await MetasRealizadas()
+                break
+            case "pendentes": 
+                await MetasPendentes()
                 break
             case "sair":
                 console.log("Até a próxima!")
