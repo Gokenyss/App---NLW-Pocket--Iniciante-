@@ -1,7 +1,7 @@
 const { select, input, checkbox } = require('@inquirer/prompts')
 const fs = require("fs").promises
 
-const mensagemInicial = "Bem vindo ao App de metas! || by:Alessandro"
+const mensagemInicial = "Bem vindo ao App de metas! || by: @4lessandro_084"
 let mensagemDoApp = "ㅤ" 
 let metas
 
@@ -20,28 +20,28 @@ const salvarMetas = async () => {
 }
 
 async function cadastrarMeta() {
-    const meta = await input({ message: "ǫᴜᴀʟ ᴀ ᴍᴇᴛᴀ?" })
+    const meta = await input({ message: "Qual é a meta?" })
 
     if (meta.length == 0) {
-        mensagemDoApp = "ᴀ ᴍᴇᴛᴀ ɴᴀᴏ ᴘᴏᴅᴇ sᴇʀ ᴠᴀᴢɪᴀ!"
+        mensagemDoApp = "A meta não pode ser vazia!"
         return
     }
     metas.push(
         { value: meta, checked: false }
     )
 
-    mensagemDoApp = "ᴍᴇᴛᴀ ᴄᴀᴅᴀsᴛʀᴀᴅᴀ ᴄᴏᴍ sᴜᴄᴇssᴏ!"
+    mensagemDoApp = "Meta cadastrada com sucesso!"
 
 }
 
 const listarMetas = async () => {
 
     if(metas.length == 0) {
-        mensagemDoApp = "ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs!"
+        mensagemDoApp = "Não existem metas!"
         return
     }
     const respostas = await checkbox({
-        message: "(ᴜsᴇ ᴀs sᴇᴛᴀs (⭡⭣) ᴘᴀʀᴀ ᴇsᴄᴏʟʜᴇʀ ᴀʟɢᴜᴍᴀ ᴀʟᴛᴇʀɴᴀᴛɪᴠᴀ, ᴏ ᴇsᴘᴀᴄᴏ ᴘᴀʀᴀ sᴇʟᴇᴄɪᴏɴᴀʀ ᴇ ᴏ ᴇɴᴛᴇʀ ᴘᴀʀᴀ ғɪɴᴀʟɪᴢᴀʀ ᴀ ᴏᴘᴇʀᴀᴄᴀᴏ) || sᴇʟᴇᴄɪᴏɴᴇ ᴀs ᴍᴇᴛᴀs ᴄᴏɴᴄʟᴜɪᴅᴀs: ",
+        message: "Selecione as metas concluídas: ",
         choices: [...metas],
         instructions: false, 
 
@@ -52,7 +52,7 @@ const listarMetas = async () => {
     })
 
     if(respostas.length == 0){
-        mensagemDoApp = "ɴᴇɴʜᴜᴍᴀ ᴍᴇᴛᴀ ғᴏɪ sᴇʟᴇᴄɪᴏɴᴀᴅᴀ!"
+        mensagemDoApp = "Nenhuma meta foi selecionada!"
         return
     }
 
@@ -65,13 +65,13 @@ const listarMetas = async () => {
 
     })
 
-        mensagemDoApp = respostas.length + " ᴍᴇᴛᴀ(s) ғᴏʀᴀᴍ ᴍᴀʀᴄᴀᴅᴀ(s) ᴄᴏᴍᴏ ᴄᴏɴᴄʟᴜɪᴅᴀ(s)!"
+        mensagemDoApp = respostas.length + " Meta(s) foram marcada(s) como concluída(s)!"
 }
 
 const MetasRealizadas = async () => {
 
     if(metas.length == 0) {
-        mensagemDoApp = "ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs!"
+        mensagemDoApp = "Não existem metas!"
         return
     }
 
@@ -80,7 +80,7 @@ const MetasRealizadas = async () => {
     })
 
     if(realizadas.length == 0) {
-        mensagemDoApp = 'ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs ʀᴇᴀʟɪᴢᴀᴅᴀs!'
+        mensagemDoApp = 'Não existem metas realizadas!'
         return
     }
 
@@ -88,14 +88,14 @@ const MetasRealizadas = async () => {
         choices: [...realizadas]
     }) 
 
-        mensagemDoApp = realizadas.length +" ᴍᴇᴛᴀs ʀᴇᴀʟɪᴢᴀᴅᴀs!"
+        mensagemDoApp = realizadas.length +" Metas realizadas!"
 
 }
 
 const MetasPendentes = async () => {
 
     if(metas.length == 0) {
-        mensagemDoApp = "ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs!"
+        mensagemDoApp = "Não existem metas!"
         return
     }
 
@@ -104,7 +104,7 @@ const MetasPendentes = async () => {
     })
     
     if(pendente.length == 0) {
-        mensagemDoApp = "ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs ᴘᴇɴᴅᴇɴᴛᴇs!"
+        mensagemDoApp = "Não existem metas pendentes!"
         return
     }
 
@@ -112,14 +112,14 @@ const MetasPendentes = async () => {
         choices: [...pendente]
     })
 
-    mensagemDoApp = pendente.length + " ᴍᴇᴛᴀs ᴘᴇɴᴅᴇɴᴛᴇs!"
+    mensagemDoApp = pendente.length + " Metas pendentes!"
 
 }
 
 async function DeletarMetas () {
 
     if(metas.length == 0) {
-        mensagemDoApp = "ɴᴀᴏ ᴇxɪsᴛᴇᴍ ᴍᴇᴛᴀs!"
+        mensagemDoApp = "Não existem metas!"
         return
     }
 
@@ -133,13 +133,13 @@ async function DeletarMetas () {
     })
 
     const itensDeletar = await checkbox({
-        message: "ᴍᴀʀǫᴜᴇ ᴀ ᴍᴇᴛᴀ ǫᴜᴇ ᴅᴇsᴇᴊᴀ ʀᴇᴍᴏᴠᴇʀ",
+        message: "Marque a meta que deseja remover: ",
         choices: [...metas],
         instructions: false, 
 
     })
     if(itensDeletar.length == 0){
-        mensagemDoApp = itensDeletar.length + " ᴍᴇᴛᴀ(s) ғᴏʀᴀᴍ ʀᴇᴍᴏᴠɪᴅᴀ(s)!"
+        mensagemDoApp = itensDeletar.length + " Meta(s) foram removida(s)!"
     }
 
     itensDeletar.forEach((item) => {
@@ -149,7 +149,7 @@ async function DeletarMetas () {
 
     })
 
-    mensagemDoApp = itensDeletar.length + 'ᴍᴇᴛᴀ(s) ғᴏʀᴀᴍ ʀᴇᴍᴏᴠɪᴅᴀ(s)!'
+    mensagemDoApp = itensDeletar.length + ' Meta(s) foram removida(s)!'
 }
 
 const mostrarMensagem = () => {
@@ -171,30 +171,30 @@ const start = async () => {
         mostrarMensagem()
         await salvarMetas()
         const opção = await select({
-            message: "ᴍᴇɴᴜ >",
+            message: "MENU >",
             choices: [
                 {
-                    name: "ᴄᴀᴅᴀsᴛʀᴀʀ ᴍᴇᴛᴀ",
+                    name: "CADASTRAR METAS",
                     value: "cadastrar"
                 },
                 { 
-                    name: "ʟɪsᴛᴀ ᴅᴇ ᴍᴇᴛᴀs", 
+                    name: "LISTA DE METAS", 
                     value: "listar"
                 },
                 {
-                    name: "ᴍᴇᴛᴀs ᴄᴏɴᴄʟᴜɪᴅᴀs",
+                    name: "METAS CONCLUÍDAS",
                     value: "realizadas"
                 },
                 {
-                    name: "ᴍᴇᴛᴀs ᴘᴇɴᴅᴇɴᴛᴇs",
+                    name: "METAS PENDENTES",
                     value: "pendentes"
                 },
                 {
-                    name: "ᴅᴇʟᴇᴛᴀʀ ᴍᴇᴛᴀs",
+                    name: "DELETAR METAS",
                     value: "deletar"
                 },
                 {
-                    name: "sᴀɪʀ",
+                    name: "SAIR",
                     value: "sair"
                 }
             ]
@@ -217,7 +217,7 @@ const start = async () => {
                 await DeletarMetas()
                 break
             case "sair":
-                console.log("ᴀᴛᴇ ᴀ ᴘʀᴏxɪᴍᴀ!")
+                console.log("Até a próxima!")
                 return
         }  
     }
